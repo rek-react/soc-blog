@@ -58,10 +58,6 @@ export const Post: FC<PropsWithChildren<IPostProps>> = ({
         <Box
           sx={{
             mt: "10px",
-            pl: {
-              xs: "50px",
-              sm: "55px",
-            },
           }}
         >
           <TitlePost id={_id} title={title} isFullPost={isFullPost} />
