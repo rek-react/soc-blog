@@ -21,7 +21,9 @@ export const Avatar: FC<AvatarProps> = ({ avatarUrl, fullName }) => {
   return (
     <Atatar
       className={classes.avatar}
-      src={avatarUrl ? `${process.env.REACT_APP_API_URI}/tmp/${avatarUrl}` : ""}
+      src={
+        avatarUrl ? `${process.env.REACT_APP_API_URI}/uploads/${avatarUrl}` : ""
+      }
       alt={fullName}
     />
   );

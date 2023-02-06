@@ -34,7 +34,7 @@ export const ImagePost: FC<ImagePostProps> = ({
   return (
     <img
       className={clsx(classes.image, { [classes.imageFull]: isFullPost })}
-      src={`${process.env.REACT_APP_API_URI}/tmp/${imageUrl}`}
+      src={`${process.env.REACT_APP_API_URI}/uploads/${imageUrl}`}
       alt={title}
     />
   );
