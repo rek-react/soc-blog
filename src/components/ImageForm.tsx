@@ -99,7 +99,7 @@ export const ImageForm: FC<ImageFormProps> = ({
             src={
               imageUrl.match("blob:")
                 ? imageUrl
-                : `${process.env.REACT_APP_API_URI}/uploads/${imageUrl}`
+                : `${process.env.REACT_APP_API_URI}/tmp/${imageUrl}`
             }
             alt="Uploaded"
           />
