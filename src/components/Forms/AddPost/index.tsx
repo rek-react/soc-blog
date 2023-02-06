@@ -229,7 +229,11 @@ export const FormAddPost = () => {
       <ButtonsAddPost
         handleReset={handleReset}
         isDisabled={
-          isCreateLoading || isUpdateLoading || isCreateError || isUpdateError
+          isCreateLoading ||
+          isUpdateLoading ||
+          isCreateError ||
+          isUpdateError ||
+          !!errorsForm.title
         }
       />
     </form>
