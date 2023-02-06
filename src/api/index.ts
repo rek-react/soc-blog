@@ -22,7 +22,7 @@ export type BaseQueryFnType = BaseQueryFn<
   unknown,
   ICustomError
 >;
-console.log(process.env.REACT_APP_API_URI);
+
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_API_URI,
   credentials: "include",
