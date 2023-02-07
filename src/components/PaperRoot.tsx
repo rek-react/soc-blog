@@ -6,9 +6,12 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
-    width: "400px",
+    maxWidth: "400px",
     padding: "50px",
     border: "1px solid #dedede",
+    [theme.breakpoints.down("sm")]: {
+      padding: "25px",
+    },
     margin: "50px auto",
   },
   rootProfile: {
