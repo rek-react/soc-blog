@@ -23,7 +23,7 @@ interface AddCommentProps {
 
 export const AddComment: FC<AddCommentProps> = ({ setCommentsCount }) => {
   const classes = useStyles();
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState<string>("");
   const { id } = useParams();
   const { userData } = useTypedSelector((state) => state.user);
   const [createComment, { isLoading, isSuccess }] = useCreateCommentMutation();
@@ -35,7 +35,7 @@ export const AddComment: FC<AddCommentProps> = ({ setCommentsCount }) => {
   }, [isLoading]);
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createComment({ id: id || "", body: { comment } });
+    createComment({ id: id || "", body: { comment: comment.trimEnd() } });
   };
   return (
     <>
