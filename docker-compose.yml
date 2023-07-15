@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: app-server
+    container_name: app-node-server
+    volumes:
+      - ./server/:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    env_file: ./server/.env
+    environment:
+      - NODE_ENV=development
+    restart: always
+    networks:
+      - app-network
+  mongo:
+    image: mongo:4
+    environment:  
+       MONGO_INITDB_ROOT_USERNAME: single-name
+       MONGO_INITDB_ROOT_PASSWORD: pass123
+    volumes:
+      - data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: app-client
+    container_name: app-react-client
+    volumes:
+      - ./client/:/app
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    data:

@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    env_file: ./server/.env
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - mongo
+    restart: always
+    networks:
+      - app-network
+  mongo:
+    image: mongo:4
+    environment:  
+       MONGO_INITDB_ROOT_USERNAME: single-name
+       MONGO_INITDB_ROOT_PASSWORD: pass123
+    volumes:
+      - data:/data/db
+    restart: always
+    networks:
+      - app-network
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    data:
