@@ -169,7 +169,6 @@ export const FormAddPost = () => {
         handleReset={handleReset}
         isDisabled={
           isCreateLoading ||
-          isCreateError ||
           !!errorsForm.title
         }
       />

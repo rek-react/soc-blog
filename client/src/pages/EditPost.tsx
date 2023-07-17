@@ -1,7 +1,7 @@
 import Paper from "@mui/material/Paper";
 import { FormEditPost } from "../components/Forms/Post/EditPost";
 
-const AddPost = () => {
+const EditPost = () => {
   return (
     <Paper
       sx={{
@@ -16,4 +16,4 @@ const AddPost = () => {
     </Paper>
   );
 };
-export default AddPost;
+export default EditPost;

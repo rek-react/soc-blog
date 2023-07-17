@@ -200,7 +200,7 @@ export const FormEditPost = () => {
       <AlertError error={errorUpdate} />
       <ButtonsAddPost
         handleReset={handleChangeValues}
-        isDisabled={isUpdateLoading || isUpdateError || !!errorsForm.title}
+        isDisabled={isUpdateLoading || !!errorsForm.title}
       />
     </form>
   );
