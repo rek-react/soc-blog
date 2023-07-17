@@ -1,5 +1,5 @@
 import { useEffect, lazy } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./components/Layout";
 import RequireAuth from "./pages/RequireAuth";
 import AuthMiddleware from "./middlewares/auth";
@@ -34,6 +34,7 @@ const App = () => {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>
   );
