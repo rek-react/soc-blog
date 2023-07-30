@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent, FC, useEffect } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useCreateCommentMutation } from "../../../api/services/commentApi";
@@ -17,11 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface AddCommentProps {
-  setCommentsCount: React.Dispatch<React.SetStateAction<number>>;
-}
-
-export const AddComment: FC<AddCommentProps> = ({ setCommentsCount }) => {
+export const AddComment = () => {
   const classes = useStyles();
   const [comment, setComment] = useState<string>("");
   const { id } = useParams();
@@ -29,10 +25,9 @@ export const AddComment: FC<AddCommentProps> = ({ setCommentsCount }) => {
   const [createComment, { isLoading, isSuccess }] = useCreateCommentMutation();
   useEffect(() => {
     if (isSuccess) {
-      setCommentsCount((prev) => prev + 1);
       setComment("");
     }
-  }, [isSuccess, setCommentsCount]);
+  }, [isSuccess]);
   const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createComment({ id, body: { comment: comment.trimEnd() } });

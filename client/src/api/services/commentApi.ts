@@ -5,13 +5,10 @@ import { IFormComment } from "../../models/forms/comment";
 
 export const commentApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getComments: builder.query<IComment[], { id?: string; limit: number }>({
-      query: ({ id = "", limit }) => {
+    getComments: builder.query<IComment[], { id?: string;  }>({
+      query: ({ id = ""}) => {
         return {
-          url: `/comments/${id}`,
-          params: {
-            limit,
-          },
+          url: `/comments/${id}`
         };
       },
       providesTags: (result) =>

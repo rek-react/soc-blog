@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import {  useState } from "react";
 import Typography from "@mui/material/Typography";
 import { SideBlock } from "../SideBlock";
 import List from "@mui/material/List";
@@ -10,22 +10,25 @@ import { useGetCommentsQuery } from "../../api/services/commentApi";
 import { MoreComments } from "./components/MoreComments";
 import { useAuth } from "../../hooks/useAuth";
 
-export const Comments: FC<{ commentsCount: number }> = ({ commentsCount }) => {
+export const Comments = () => {
   const { id } = useParams();
   const isAuth = useAuth();
-  const [limit, setLimit] = useState(7);
-  const [newCommentsCount, setCommentsCount] = useState(commentsCount);
+  const [limit, setLimit] = useState(5);
   const {
     data: comments,
     isLoading,
     isError,
   } = useGetCommentsQuery(
-    { id, limit },
-
+    { id },
     {
       refetchOnMountOrArgChange: true,
     }
   );
+
+  const changeLimit = () => {
+    setLimit(limit + limit);
+  };
+
   if (isError) {
     return (
       <Typography variant="h2" color="red" align="center">
@@ -33,14 +36,17 @@ export const Comments: FC<{ commentsCount: number }> = ({ commentsCount }) => {
       </Typography>
     );
   }
+
+  const currentComments = comments?.slice(0, limit);
+  
   return (
     <SideBlock title="Комментарии">
-      {isAuth && <AddComment setCommentsCount={setCommentsCount} />}
+      {isAuth && <AddComment />}
       <List>
         {isLoading
           ? [...Array(limit)].map((_, index) => <CommentSkeleton key={index} />)
-          : comments?.length !== 0 &&
-            comments?.map((comment) => (
+          : currentComments?.length !== 0 &&
+            currentComments?.map((comment) => (
               <Comment
                 key={comment._id}
                 _id={comment._id}
@@ -50,7 +56,9 @@ export const Comments: FC<{ commentsCount: number }> = ({ commentsCount }) => {
               />
             ))}
       </List>
-      {newCommentsCount > limit && <MoreComments  setLimit={setLimit} />}
+      {comments?.length! > limit && (
+        <MoreComments changeLimit={changeLimit} />
+      )}
     </SideBlock>
   );
 };

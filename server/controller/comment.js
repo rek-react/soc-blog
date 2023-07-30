@@ -14,8 +14,7 @@ class CommentController {
   async get(req, res, next) {
     try {
       const { postId } = req.params;
-      const { limit } = req.query;
-      const comments = await commentService.get(postId, limit);
+      const comments = await commentService.get(postId);
       return res.json(comments);
     } catch (e) {
       next(e);

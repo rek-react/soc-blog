@@ -33,7 +33,7 @@ const FullPost = () => {
           text={post.text}
         />
       )}
-      <Comments commentsCount={post?.commentsCount || 0} />
+      <Comments />
     </>
   );
 };

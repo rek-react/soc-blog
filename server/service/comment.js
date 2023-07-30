@@ -12,11 +12,10 @@ class CommentService {
     const commentDto = new CommentDto(comment);
     return commentDto;
   }
-  async get(postId, limit) {
+  async get(postId) {
     let { comments } = await PostModel.findById(postId).populate({
       path: "comments",
       select: "-updatedAt -__v",
-      limit,
       options: {
         sort: { createdAt: -1 },
         populate: {
