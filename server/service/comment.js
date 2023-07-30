@@ -1,4 +1,4 @@
-import CommentDto from "../dtos/comment.js";
+import CommentDto from "../dto/comment.js";
 import CommentModel from "../models/comment.js";
 import PostModel from "../models/post.js";
 

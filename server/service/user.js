@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import UserDto from "../dtos/user.js";
+import UserDto from "../dto/user.js";
 import { ApiError } from "../exeptions/error.js";
 import UserModel from "../models/user.js";
 import bcrypt from "bcrypt";
@@ -8,7 +8,7 @@ import mailService from "./mail.js";
 import validator from "email-validator";
 import { deleteFile } from "../utils/deleteFIle.js";
 class UserService {
-  async register(email, fullName, password) {
+  async create(email, fullName, password) {
     const candidate = await UserModel.findOne({
       $or: [{ email }, { fullName }],
     });
@@ -32,7 +32,7 @@ class UserService {
       activationLink,
     });
 
-    return this.resultAuth(user);
+    return this.result(user);
   }
   async login(login, password) {
     const isEmail = validator.validate(login);
@@ -49,14 +49,22 @@ class UserService {
     if (!isPassword) {
       throw ApiError.badRequest("Неверный логин или пароль");
     }
-    return this.resultAuth(user);
+    return this.result(user);
   }
   async logout(refreshToken) {
     if (!refreshToken) {
       throw ApiError.unauthorizedError();
     }
-    const token = await tokenService.removeToken(refreshToken);
-    return token;
+    const tokenData = await tokenService.removeToken(refreshToken);
+    if(!tokenData){
+      throw ApiError.unauthorizedError();
+    }
+    const user = await UserModel.findById(tokenData.user)
+    if(!user){
+      throw ApiError.unauthorizedError();
+    }
+    const userDto = new UserDto(user)
+    return userDto;
   }
   async update(userId, { email, fullName, image }) {
     const candidate = await UserModel.findOne({
@@ -106,7 +114,7 @@ class UserService {
     }
 
     const user = await UserModel.findById(userData.id);
-    return this.resultAuth(user);
+    return this.result(user);
   }
 
   async activate(activationLink) {
@@ -125,7 +133,7 @@ class UserService {
     const userDto = new UserDto(user);
     return { ...userDto };
   }
-  async resultAuth(user) {
+  async result(user) {
     const userDto = new UserDto(user);
 
     const tokens = tokenService.generateTokens({

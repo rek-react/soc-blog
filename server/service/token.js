@@ -45,12 +45,12 @@ class TokenService {
       return null;
     }
   }
-  async findToken(token) {
-    const tokenData = await TokenModel.findOne({ refreshToken: token });
+  async findToken(refreshToken) {
+    const tokenData = await TokenModel.findOne({ refreshToken });
     return tokenData;
   }
   async removeToken(refreshToken) {
-    const token = await TokenModel.deleteOne({ refreshToken });
+    const token = await TokenModel.findOneAndDelete({ refreshToken });
     return token;
   }
 }
