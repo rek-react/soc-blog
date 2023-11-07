@@ -1,10 +1,10 @@
 import { isValidObjectId } from "mongoose";
+import PostDto from "../dto/post.js";
 import { ApiError } from "../exeptions/error.js";
+import CommentModel from "../models/comment.js";
 import PostModel from "../models/post.js";
 import UserModel from "../models/user.js";
-import CommentModel from "../models/comment.js";
 import { deleteFile } from "../utils/deleteFIle.js";
-import PostDto from "../dto/post.js";
 
 class PostService {
   async create(image, userId, { title, text, tags }) {

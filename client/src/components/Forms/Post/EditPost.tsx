@@ -1,22 +1,22 @@
-import { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { Theme } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/styles";
+import { Options } from "easymde";
+import "easymde/dist/easymde.min.css";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import Editor from "react-simplemde-editor";
 import {
   useGetPostQuery,
   useUpdatePostMutation,
 } from "../../../api/services/postApi";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import { IFormPost } from "../../../models/forms/post";
-import "easymde/dist/easymde.min.css";
-import Editor from "react-simplemde-editor";
-import { ButtonsAddPost } from "./components/Buttons";
-import { AlertError } from "../../UI/AlertError";
-import { Options } from "easymde";
-import { FormAddPostSkeleton } from "./Skeleton";
-import { makeStyles } from "@mui/styles";
 import { ImageForm } from "../../ImageForm";
-import { Theme } from "@mui/material";
+import { AlertError } from "../../UI/AlertError";
+import { FormAddPostSkeleton } from "./Skeleton";
+import { ButtonsAddPost } from "./components/Buttons";
 
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -136,9 +136,9 @@ export const FormEditPost = () => {
   const handleOnSubmit = ({ title, tags, text }: IFormPost) => {
     const formData = new FormData();
     formData.append("image", selectImage ? selectImage : imageUrl);
-    if (title !== post?.title) formData.append("title", title);
-    if (tags !== post?.tags.join(",")) formData.append("tags", tags);
-    if (text !== post?.text) formData.append("text", text);
+    formData.append("title", title);
+    formData.append("tags", tags);
+    formData.append("text", text);
     updatePost({ id, body: formData });
   };
 

@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { IFormProfile } from "../../models/forms/profile";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { useUpdateMeMutation } from "../../api/services/userApi";
-import { useNavigate } from "react-router-dom";
-import { AlertError } from "../UI/AlertError";
-import { ImageForm } from "../ImageForm";
-import { makeStyles } from "@mui/styles";
 import { FormGroup } from "@mui/material";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { makeStyles } from "@mui/styles";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useUpdateMeMutation } from "../../api/services/userApi";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { IFormProfile } from "../../models/forms/profile";
+import { ImageForm } from "../ImageForm";
+import { AlertError } from "../UI/AlertError";
 
 const useStyles = makeStyles(() => ({
   field: {
@@ -41,9 +41,9 @@ export const FormProfile = () => {
     useUpdateMeMutation();
   const handleOnSubmit = ({ fullName, email }: IFormProfile) => {
     const formData = new FormData();
-    if (fullName !== userData?.fullName) formData.append("fullName", fullName);
-    if (email !== userData?.email) formData.append("email", email);
     formData.append("image", selectImage ? selectImage : imageUrl);
+    formData.append("fullName", fullName);
+    formData.append("email", email);
     updateMe(formData);
   };
   useEffect(() => {

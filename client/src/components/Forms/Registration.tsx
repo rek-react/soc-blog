@@ -1,13 +1,14 @@
-import { useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import { ButtonAuth } from "../UI/ButtonAuth";
-import { AlertError } from "../UI/AlertError";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { useRegisterMutation } from "../../api/services/authApi";
-import { IFormRegister } from "../../models/forms/auth/register";
-import { makeStyles } from "@mui/styles";
 import { FormGroup } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/styles";
+import { useEffect, useLayoutEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../../api/services/authApi";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { IFormRegister } from "../../models/forms/auth/register";
+import { AlertError } from "../UI/AlertError";
+import { ButtonAuth } from "../UI/ButtonAuth";
 
 const useStyles = makeStyles(() => ({
   field: {
@@ -29,11 +30,16 @@ export const FormRegistration = () => {
 
     formState: { errors: errorsForm },
   } = useForm({ defaultValues });
-
+  const [rememberLogin, setRememberLogin] = useLocalStorage("login");
   const [registerUser, { error, isError, isLoading, isSuccess }] =
     useRegisterMutation();
 
   const navigate = useNavigate();
+  useLayoutEffect(() => {
+    if (isSuccess && rememberLogin) {
+      setRememberLogin("");
+    }
+  }, [isSuccess]);
   useEffect(() => {
     if (isSuccess) {
       navigate("/");
