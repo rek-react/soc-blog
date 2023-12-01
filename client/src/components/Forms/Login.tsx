@@ -1,14 +1,14 @@
+import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@mui/styles";
 import { useEffect, useLayoutEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../api/services/authApi";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { IFormLogin } from "../../models/forms/auth/login";
 import { AlertError } from "../UI/AlertError";
 import { ButtonAuth } from "../UI/ButtonAuth";
-import { useForm } from "react-hook-form";
-import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
-import { makeStyles } from "@mui/styles";
-import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const useStyles = makeStyles(() => ({
   field: {
@@ -67,7 +67,7 @@ export const FormLogin = () => {
           type="text"
           error={!!errorsForm.login || isError}
           helperText={errorsForm.login?.message}
-          {...register("login", { required: "Обязательно Email" })}
+          {...register("login", { required: "Обязательно Login" })}
           fullWidth
         />
         <TextField
